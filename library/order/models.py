@@ -1,11 +1,13 @@
 from django.db import models
+from django.utils import timezone
+from authentication.models import CustomUser
 
 class Order(models.Model):
     book = models.ForeignKey('book.Book', on_delete=models.CASCADE)
-    user = models.ForeignKey('authentication.CustomUser', on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True, default=timezone.now)
     end_at = models.DateTimeField(null=True, blank=True)
-    plated_end_at = models.DateTimeField()
+    plated_end_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         """
